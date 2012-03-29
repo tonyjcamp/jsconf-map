@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSConf Eats &amp; Drinks</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC5LIwkEbS8TH4I9Mu7caNlnTwp_sZPAd8&amp;sensor=true"></script>
+    <script src="./js/nucleo/core.js"></script>
+    <script src="./js/api/google.js"></script>
+    <style>
+        html, body { width: 100%; height: 100%; margin: 0; padding: 0; }
+        body { font: normal 100% 'Helvetica Neue', Helvetica, Arial, sans-serf; }
+        #layout { width: 100%; height: 100%; }
+        #map_canvas { width: 100%; height: 80%; border-bottom: 2px solid black; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    
+<div id="layout">
+    <div id="map_canvas"></div>
+</div>
+
+<script>
+
+var eats = [
+    { name: 'FnB', address: "7133 E Stetson Drive, Scottsdale, AZ 85252" },
+    { name: 'Citizen House', address: "7111 East 5th Avenue, Scottsdale, AZ" },
+    { name: 'Cowboy Ciao', address: "7133 East Stetson Drive, Scottsdale, AZ" },
+    { name: "Stingray Sushi", address: "4302 North Scottsdale Road, Scottsdale, AZ" },
+    { name: "Fogo de Chao", address: "6300 N Scottsdale Rd, Paradise Valley, AZ 85253" },
+    { name: "AZ 88", address: "7353 E Scottsdale Mall, Scottsdale, AZ 85251" }
+];
+
+var clubs = [
+    { name: "Mint, The", address: "7373 East Camelback Road, Scottsdale, AZ" },
+    { name: "Myst", address: "7340 East Shoeman Lane, Scottsdale, AZ" },
+    { name: "Axis Radius", address: "7340 E Indian Plz, Scottsdale, AZ 85251" },
+    { name: "Wild Knight", address: "4405 N Saddlebag Trl, Scottsdale, AZ 85251" },
+    { name: "Martini Ranch", address: "7295 E Stetson Dr, Scottsdale, AZ 85251" }
+];
+
+var bars = [
+    { name: "Firehouse", address: "4312 N Brown Ave, Scottsdale, AZ 85251" },
+    { name: "TT Roadhouse", address: "2915 N 68th St, Scottsdale, AZ 85251" }
+];
+
+var map;
+
+
+var MarkerImages = {};
+MarkerImages.Blue = new google.maps.MarkerImage(
+	'http://labs.google.com/ridefinder/images/mm_20_' + 'blue' + '.png',
+	// This marker is 20 pixels wide by 32 pixels tall.
+	new google.maps.Size(12, 20),
+	// The origin for this image is 0,0.
+	new google.maps.Point(0,0),
+	// The anchor for this image is the base of the flagpole at 0,32.
+	new google.maps.Point(0, 6)
+);
+
+MarkerImages.Red = new google.maps.MarkerImage(
+	'http://labs.google.com/ridefinder/images/mm_20_' + 'red' + '.png',
+	// This marker is 20 pixels wide by 32 pixels tall.
+	new google.maps.Size(12, 20),
+	// The origin for this image is 0,0.
+	new google.maps.Point(0,0),
+	// The anchor for this image is the base of the flagpole at 0,32.
+	new google.maps.Point(0, 6)
+);
+
+var MarkerShadow = new google.maps.MarkerImage(
+	'http://labs.google.com/ridefinder/images/mm_20_shadow.png',
+	// The shadow image is larger in the horizontal dimension
+	// while the position and offset are the same as for the main image.
+	new google.maps.Size(22, 20),
+	new google.maps.Point(0,0),
+	new google.maps.Point(0, 6)
+);
+
+
+
+
+
+var located = function(geometry) {
+    map = Object.create(Nucleo.Google.Map);
+    map.render("map_canvas", {
+        center: geometry.location,
+        zoom: 14,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    var marker = Object.create(Nucleo.Google.Marker);
+    marker.initialize({
+        animation: google.maps.Animation.DROP,
+        position: geometry.location,
+        map: map.map,
+        title: "FireSky Resort & Spa"
+    });
+    loop();
+};
+
+var loaded = function(place) {
+    Nucleo.Google.Geocoder.geocode('firesky', "4925 N Scottsdale Rd, Scottsdale, AZ 85251", located);
+};
+
+var loop = function() {
+    if (eats.length > 0) {
+        var eat = eats.shift();
+        getLocation(eat);
+    } else if (bars.length > 0) {
+        var club = clubs.shift();
+        getLocation(club);
+    }
+};
+
+var getLocation = function(place) {
+    console.log("place", place.name);
+    Nucleo.Google.Geocoder.geocode(place.name, place.address, makeMarker);
+};
+
+makeMarker = function(geometry) {
+    var marker = Object.create(Nucleo.Google.Marker);
+    marker.initialize({
+        animation: google.maps.Animation.DROP,
+        position: geometry.location,
+        map: map.map,
+        icon: MarkerImages.Blue,
+        shadow: MarkerShadow,
+        title: ""
+    });
+    loop();
+};
+
+window.loaded(loaded);
+
+</script>
+
+</body>
+</html>
