@@ -11,6 +11,36 @@
     var Size       = MAPS.Size;       // (width, height)
     
     
+    var markerSize = new Size(12, 20),
+        shadowSize = new Size(22, 30),
+        originPoint = new Point(0,0),
+        flagpoleBasePoint = new Point(0, 6);
+
+    // These markers are 20 pixels wide by 32 pixels tall.
+    Nucleo.MarkerImages = {};
+    Nucleo.MarkerImages.Blue = new MAPS.MarkerImage(
+    	'http://labs.google.com/ridefinder/images/mm_20_' + 'blue' + '.png',
+    	markerSize,
+    	originPoint,
+    	flagpoleBasePoint
+    );
+
+    Nucleo.MarkerImages.Red = new MAPS.MarkerImage(
+    	'http://labs.google.com/ridefinder/images/mm_20_' + 'red' + '.png',
+    	markerSize,
+    	originPoint,
+    	flagpoleBasePoint
+    );
+
+    Nucleo.MarkerShadow = new MAPS.MarkerImage(
+    	'http://labs.google.com/ridefinder/images/mm_20_shadow.png',
+    	// The shadow image is larger in the horizontal dimension
+    	// while the position and offset are the same as for the main image.
+    	shadowSize,
+    	originPoint,
+    	flagpoleBasePoint
+    );
+
     
     var Geocoder = {
       

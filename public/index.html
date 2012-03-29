@@ -21,6 +21,7 @@
 
 <script>
 
+// Top Ten Restaurants
 var eats = [
     { name: 'FnB', address: "7133 E Stetson Drive, Scottsdale, AZ 85252" },
     { name: 'Citizen House', address: "7111 East 5th Avenue, Scottsdale, AZ" },
@@ -30,6 +31,7 @@ var eats = [
     { name: "AZ 88", address: "7353 E Scottsdale Mall, Scottsdale, AZ 85251" }
 ];
 
+// Top Ten Clubs
 var clubs = [
     { name: "Mint, The", address: "7373 East Camelback Road, Scottsdale, AZ" },
     { name: "Myst", address: "7340 East Shoeman Lane, Scottsdale, AZ" },
@@ -38,44 +40,19 @@ var clubs = [
     { name: "Martini Ranch", address: "7295 E Stetson Dr, Scottsdale, AZ 85251" }
 ];
 
+// Top Ten Bars (beer)
 var bars = [
     { name: "Firehouse", address: "4312 N Brown Ave, Scottsdale, AZ 85251" },
-    { name: "TT Roadhouse", address: "2915 N 68th St, Scottsdale, AZ 85251" }
+    { name: "TT Roadhouse", address: "2915 N 68th St, Scottsdale, AZ 85251" },
+    { name: "Papago Brewery", address: "" }
 ];
 
+// Top Ten Quick Eats / Ice Cream / Froyo
+//var eats = {};
+
+
+
 var map;
-
-
-var MarkerImages = {};
-MarkerImages.Blue = new google.maps.MarkerImage(
-	'http://labs.google.com/ridefinder/images/mm_20_' + 'blue' + '.png',
-	// This marker is 20 pixels wide by 32 pixels tall.
-	new google.maps.Size(12, 20),
-	// The origin for this image is 0,0.
-	new google.maps.Point(0,0),
-	// The anchor for this image is the base of the flagpole at 0,32.
-	new google.maps.Point(0, 6)
-);
-
-MarkerImages.Red = new google.maps.MarkerImage(
-	'http://labs.google.com/ridefinder/images/mm_20_' + 'red' + '.png',
-	// This marker is 20 pixels wide by 32 pixels tall.
-	new google.maps.Size(12, 20),
-	// The origin for this image is 0,0.
-	new google.maps.Point(0,0),
-	// The anchor for this image is the base of the flagpole at 0,32.
-	new google.maps.Point(0, 6)
-);
-
-var MarkerShadow = new google.maps.MarkerImage(
-	'http://labs.google.com/ridefinder/images/mm_20_shadow.png',
-	// The shadow image is larger in the horizontal dimension
-	// while the position and offset are the same as for the main image.
-	new google.maps.Size(22, 20),
-	new google.maps.Point(0,0),
-	new google.maps.Point(0, 6)
-);
-
 
 
 
@@ -122,8 +99,8 @@ makeMarker = function(geometry) {
         animation: google.maps.Animation.DROP,
         position: geometry.location,
         map: map.map,
-        icon: MarkerImages.Blue,
-        shadow: MarkerShadow,
+        icon: Nucleo.MarkerImages.Blue,
+        shadow: Nucleo.MarkerShadow,
         title: ""
     });
     loop();
