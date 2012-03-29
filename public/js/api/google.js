@@ -32,6 +32,13 @@
     	flagpoleBasePoint
     );
 
+    Nucleo.MarkerImages.BOOGS = new MAPS.MarkerImage(
+      'http://labs.google.com/ridefinder/images/mm_20_' + 'green' + '.png',
+      markerSize,
+      originPoint,
+      flagpoleBasePoint
+    );
+
     Nucleo.MarkerShadow = new MAPS.MarkerImage(
     	'http://labs.google.com/ridefinder/images/mm_20_shadow.png',
     	// The shadow image is larger in the horizontal dimension
@@ -68,7 +75,7 @@
               try {
                     this.callback(results[0].geometry);
                 } catch(error) {
-                    console.warn("Results weren't found", error);
+                    console.warn("Results weren't found", error, status);
                 }
           } else {
               // TODO: Do something constructive.
@@ -119,7 +126,6 @@
       update: function(location, zoom) {
           // TODO: This will update the location or zoom of `this.map`.
       }
-      
     };
     
     
