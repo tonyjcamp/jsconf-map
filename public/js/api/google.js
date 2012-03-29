@@ -65,11 +65,14 @@
     
       response: function(results, status) {
           if (status!=MAPS.GeocoderStatus.ZERO_RESULTS) {
-              console.log("Geocode success");
-              this.callback(results[0].geometry);
+              try {
+                    this.callback(results[0].geometry);
+                } catch(error) {
+                    console.warn("Results weren't found", error);
+                }
           } else {
               // TODO: Do something constructive.
-              console.log("Geocode was unsuccessful because " + status);
+              console.warn("Geocode was unsuccessful because " + status);
           }
       }
       
